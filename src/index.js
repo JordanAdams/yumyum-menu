@@ -1,6 +1,5 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
-const auth = require("koa-basic-auth");
 const Stream = require("stream");
 const tempWrite = require("temp-write");
 const { createReadStream, unlink } = require("fs-extra");
@@ -11,7 +10,6 @@ const slack = require("./slack");
 const app = new Koa();
 
 app.use(bodyParser());
-app.use(auth({ name: config.http.username, pass: config.http.password }));
 
 app.use(async ctx => {
   const email = await gmail.getLatestYumYumMenuEmail();
