@@ -9,7 +9,13 @@ module.exports = {
     password: process.env.HTTP_PASSWORD
   },
   google: {
-    access_token: process.env.GOOGLE_ACCESS_TOKEN,
-    refresh_token: process.env.GOOGLE_REFRESH_TOKEN
+    clientId: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    accessToken: process.env.GOOGLE_ACCESS_TOKEN,
+    refreshToken: process.env.GOOGLE_REFRESH_TOKEN
+  },
+  slack: {
+    token: process.env.SLACK_TOKEN,
+    channelId: process.env.SLACK_CHANNEL_ID
   }
 };

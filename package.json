@@ -6,13 +6,18 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon --exec yarn start",
+    "build": "exit 0",
     "format": "prettier --write src/**/*.js"
   },
   "dependencies": {
+    "fs-extra": "^8.1.0",
     "googleapis": "^42.0.0",
     "koa": "^2.7.0",
     "koa-basic-auth": "^4.0.0",
-    "koa-bodyparser": "^4.2.1"
+    "koa-bodyparser": "^4.2.1",
+    "luxon": "^1.17.2",
+    "slack": "^11.0.2",
+    "temp-write": "^4.0.0"
   },
   "devDependencies": {
     "dotenv": "^8.0.0",
