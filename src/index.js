@@ -16,6 +16,7 @@ app.use(async ctx => {
   if (!email) {
     ctx.status = 500;
     ctx.body = "Failed to find menu email.";
+    return;
   }
 
   const attachment = await gmail.getFirstMatchingAttachment(
@@ -25,6 +26,7 @@ app.use(async ctx => {
   if (!attachment) {
     ctx.status = 500;
     ctx.body = "Missing attachment in latest email.";
+    return;
   }
 
   const tempPath = await tempWrite(Buffer.from(attachment.data, "base64"));
