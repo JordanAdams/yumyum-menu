@@ -1,0 +1,26 @@
+version: v1.0
+name: First pipeline
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+  containers:
+    - name: main
+      image: 'node:lts-alpine'
+blocks:
+  - name: Check
+    task:
+      prologue:
+        commands:
+          - checkout
+      jobs:
+        - name: Lint
+          commands:
+            - yarn lint
+        - name: Test
+          commands:
+            - yarn test
+        - name: Audit
+          commands:
+            - yarn audit
+    dependencies: []
