@@ -6,17 +6,15 @@ agent:
     os_image: ubuntu1804
   containers:
     - name: main
-      image: node:lts
+      image: 'node:lts'
 blocks:
   - name: Check
     task:
       prologue:
         commands:
           - checkout
+          - yarn install
       jobs:
-        - name: Install
-          commands:
-            - yarn install
         - name: Lint
           commands:
             - yarn lint
