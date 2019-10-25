@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu1804
   containers:
     - name: main
-      image: semaphoreci/node:lts
+      image: node:lts
 blocks:
   - name: Check
     task:
