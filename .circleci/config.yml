@@ -1,0 +1,8 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: node:lts-alpine
+    steps:
+      - checkout
+      - run: npm test
