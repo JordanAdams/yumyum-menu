@@ -17,9 +17,6 @@ blocks:
         - name: Lint
           commands:
             - yarn lint
-        - name: Test
-          commands:
-            - yarn test
         - name: Audit
           commands:
             - yarn audit
