@@ -14,10 +14,12 @@ blocks:
         commands:
           - checkout
       jobs:
+        - name: Install
+          commands:
+            - yarn install
         - name: Lint
           commands:
             - yarn lint
         - name: Audit
           commands:
             - yarn audit
-    dependencies: []
