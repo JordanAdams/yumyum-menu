@@ -38,3 +38,8 @@ blocks:
             - gcloud auth activate-service-account --key-file=$HOME/credentials.json
             - gcloud auth configure-docker -q
             - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'
+promotions:
+  - name: Deploy Test
+    promotion_file: deploy-test.yml
+  # - name: Deploy Production
+  #   promotion_file: deploy-production.yml
