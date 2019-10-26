@@ -24,8 +24,10 @@ blocks:
             - yarn lint
   - name: Build & Push
     task:
+      secrets:
+        - name: yumyum-gcp-service-account
       jobs:
-        - name: docker build & docker push
+        - name: Build Image & Push To GCP
           commands:
             - checkout
             - cache restore
