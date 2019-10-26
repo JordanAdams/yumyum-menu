@@ -14,4 +14,4 @@ blocks:
           commands:
             - gcloud auth activate-service-account --key-file=$HOME/credentials.json
             - gcloud auth configure-docker -q
-            - gcloud beta run deploy yumyum-menu-test --project jordanadams --region europe-west-1 --image gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
+            - gcloud beta run deploy yumyum-menu-test --project jordanadams --platform managed --region europe-west-1 --image gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
