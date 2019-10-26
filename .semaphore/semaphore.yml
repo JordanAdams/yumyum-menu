@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu1804
   containers:
     - name: main
-      image: semaphore/node:12
+      image: semaphoreci/node:12
 blocks:
   - name: Prepare
     task:
