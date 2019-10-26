@@ -12,7 +12,9 @@ blocks:
           commands:
             - checkout
             - cache restore
-            - "docker build -t gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH} ."
+            - >-
+              docker build -t gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
+              .
             - cache store
   - name: Push
     task:
