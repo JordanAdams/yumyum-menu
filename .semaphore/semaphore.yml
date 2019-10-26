@@ -6,7 +6,7 @@ agent:
     os_image: ubuntu1804
   containers:
     - name: main
-      image: 'node:lts'
+      image: semaphore/node:12
 blocks:
   - name: Prepare
     task:
@@ -14,6 +14,7 @@ blocks:
         - name: yarn install
           commands:
             - checkout
+            - cache restore
             - yarn install
             - cache store
   - name: Checks
