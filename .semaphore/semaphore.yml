@@ -40,6 +40,6 @@ blocks:
             - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'
 promotions:
   - name: Deploy Test
-    promotion_file: deploy-test.yml
+    pipeline_file: deploy-test.yml
   # - name: Deploy Production
   #   promotion_file: deploy-production.yml
