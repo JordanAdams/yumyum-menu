@@ -14,7 +14,6 @@ blocks:
         - name: yarn install
           commands:
             - checkout
-            - cache restore
             - yarn install
             - cache store
   - name: Checks
