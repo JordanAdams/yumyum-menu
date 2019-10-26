@@ -42,6 +42,6 @@ blocks:
           commands:
             - checkout
             - cache restore
-            - gcloud auth activate-service-account --key-file=credentials.json
+            - gcloud auth activate-service-account --key-file=$HOME/credentials.json
             - gcloud auth configure-docker -q
             - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'
