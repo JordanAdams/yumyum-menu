@@ -22,10 +22,10 @@ blocks:
             - checkout
             - cache restore
             - yarn lint
-  - name: Build
+  - name: Build & Push
     task:
       jobs:
-        - name: docker build
+        - name: docker build & docker push
           commands:
             - checkout
             - cache restore
@@ -33,15 +33,6 @@ blocks:
               docker build -t
               gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH} .
             - cache store
-  - name: Push
-    task:
-      secrets:
-        - name: yumyum-gcp-service-account
-      jobs:
-        - name: docker push
-          commands:
-            - checkout
-            - cache restore
             - gcloud auth activate-service-account --key-file=$HOME/credentials.json
             - gcloud auth configure-docker -q
             - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'
