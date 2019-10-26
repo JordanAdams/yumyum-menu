@@ -13,8 +13,8 @@ blocks:
             - checkout
             - cache restore
             - >-
-              docker build -t gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
-              .
+              docker build -t
+              gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH} .
             - cache store
   - name: Push
     task:
@@ -27,4 +27,4 @@ blocks:
             - cache restore
             - gcloud auth activate-service-account --key-file=credentials.json
             - gcloud auth configure-docker -q
-            - docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
+            - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'

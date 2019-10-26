@@ -22,7 +22,6 @@ blocks:
             - checkout
             - cache restore
             - yarn lint
-
 promotions:
   - name: Dockerize
     pipeline_file: dockerize.yml
