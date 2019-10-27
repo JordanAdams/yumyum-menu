@@ -42,6 +42,6 @@ promotions:
   - name: Deploy Test
     pipeline_file: deploy-test.yml
   - name: Deploy Production
-    promotion_file: deploy-production.yml
+    pipeline_file: deploy-production.yml
     auto_promote:
       when: "result === 'passed' and branch === 'master'"
