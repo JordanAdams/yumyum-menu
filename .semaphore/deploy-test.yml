@@ -1,0 +1,23 @@
+version: v1.0
+name: Deploy Test
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Deploy
+    task:
+      secrets:
+        - name: yumyum-gcp-service-account
+      jobs:
+        - name: Deploy to Cloud Run
+          commands:
+            - gcloud auth activate-service-account --key-file=$HOME/credentials.json
+            - gcloud auth configure-docker -q
+            - >-
+              gcloud beta run deploy yumyum-menu-test
+              --project jordanadams
+              --platform managed
+              --region europe-west1
+              --image gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}
+              --no-allow-unauthenticated

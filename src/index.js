@@ -15,12 +15,14 @@ app.use(async ctx => {
   if (!email) {
     ctx.status = 500;
     ctx.body = "Failed to find menu email.";
+    return;
   }
 
   const html = gmail.extractHtmlFromEmail(email);
   if (!html) {
     ctx.status = 500;
     ctx.body = "Email has no html.";
+    return;
   }
 
   const imageUrl = yumyum.extractMenuImageUrl(html);

@@ -1,0 +1,47 @@
+version: v1.0
+name: Checks
+agent:
+  machine:
+    type: e1-standard-2
+    os_image: ubuntu1804
+blocks:
+  - name: Prepare
+    task:
+      jobs:
+        - name: yarn install
+          commands:
+            - checkout
+            - cache restore
+            - yarn install
+            - cache store
+  - name: Checks
+    task:
+      jobs:
+        - name: yarn lint
+          commands:
+            - checkout
+            - cache restore
+            - yarn lint
+  - name: Build & Push
+    task:
+      secrets:
+        - name: yumyum-gcp-service-account
+      jobs:
+        - name: Build Image & Push To GCP
+          commands:
+            - checkout
+            - cache restore
+            - >-
+              docker build -t
+              gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH} .
+            - cache store
+            - gcloud auth activate-service-account --key-file=$HOME/credentials.json
+            - gcloud auth configure-docker -q
+            - 'docker push gcr.io/jordanadams/yumyum-menu:${SEMAPHORE_GIT_BRANCH}'
+promotions:
+  - name: Deploy Test
+    pipeline_file: deploy-test.yml
+  - name: Deploy Production
+    pipeline_file: deploy-production.yml
+    auto_promote:
+      when: "result = 'passed' and branch = 'master'"
