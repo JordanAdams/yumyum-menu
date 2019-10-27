@@ -1,44 +1,44 @@
 const Koa = require("koa");
 const bodyParser = require("koa-bodyparser");
-const Stream = require("stream");
-const tempWrite = require("temp-write");
-const { createReadStream, unlink } = require("fs-extra");
 const config = require("./config");
 const gmail = require("./gmail");
 const slack = require("./slack");
+const yumyum = require("./yumyum");
+const axios = require("axios");
 
 const app = new Koa();
 
 app.use(bodyParser());
 
 app.use(async ctx => {
-  const email = await gmail.getLatestYumYumMenuEmail();
+  const email = await yumyum.fetchLatestMenuEmail();
   if (!email) {
     ctx.status = 500;
     ctx.body = "Failed to find menu email.";
     return;
   }
 
-  const attachment = await gmail.getFirstMatchingAttachment(
-    email,
-    e => e.mimeType === "image/jpeg"
-  );
-  if (!attachment) {
+  const html = gmail.extractHtmlFromEmail(email);
+  if (!html) {
     ctx.status = 500;
-    ctx.body = "Missing attachment in latest email.";
+    ctx.body = "Email has no html.";
     return;
   }
 
-  const tempPath = await tempWrite(Buffer.from(attachment.data, "base64"));
+  const imageUrl = yumyum.extractMenuImageUrl(html);
 
-  await slack.files.upload({
-    file: createReadStream(tempPath),
-    channels: config.slack.channelId,
-    title: "Menu",
-    initial_comment: `*${gmail.getSubject(email)}*` || "*Menu*"
+  const imageResponse = await axios({
+    method: "get",
+    url: imageUrl,
+    responseType: "stream"
   });
 
-  await unlink(tempPath);
+  await slack.files.upload({
+    file: imageResponse.data,
+    channels: config.slack.channelId,
+    title: "Menu",
+    initial_comment: `*${gmail.getSubjectFromEmail(email)}*` || "*Menu*"
+  });
 
   ctx.status = 200;
 });

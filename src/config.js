@@ -17,5 +17,8 @@ module.exports = {
   slack: {
     token: process.env.SLACK_TOKEN,
     channelId: process.env.SLACK_CHANNEL_ID
+  },
+  features: {
+    dateFilter: (process.env.FEATURE_DATE_FILTER || "true") === "true"
   }
 };
