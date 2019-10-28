@@ -13,7 +13,7 @@ const fetchLatestMenuEmail = () => {
     config.features.dateFilter ? `after:${today}` : ""
   ];
 
-  return findEmail(filters.join(""));
+  return findEmail(filters.join(" "));
 };
 
 const extractMenuImageUrl = html => {
