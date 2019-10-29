@@ -1,14 +1,12 @@
-const config = require("./config");
-const { google } = require("googleapis");
+import config from "./config";
+import { google } from "googleapis";
 
-const auth = new google.auth.OAuth2({
+export const googleAuth = new google.auth.OAuth2({
   clientId: config.google.clientId,
   clientSecret: config.google.clientSecret
 });
 
-auth.setCredentials({
+googleAuth.setCredentials({
   refresh_token: config.google.refreshToken,
   access_token: config.google.accessToken
 });
-
-module.exports = { auth };

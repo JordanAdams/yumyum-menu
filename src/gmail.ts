@@ -1,14 +1,15 @@
-const { google } = require("googleapis");
-const { auth } = require("./google");
+import { google } from "googleapis";
+import { googleAuth } from "./google";
+import { Maybe } from "monet";
 
-const gmail = google.gmail({ version: "v1", auth });
+const gmail = google.gmail({ version: "v1", auth: googleAuth });
 
-const getEmail = async id => {
+const getEmail = async (id: string): Promise<Maybe<>> => {
   const resp = await gmail.users.messages.get({ userId: "me", id });
-  return resp.data || null;
+  return resp.data;
 };
 
-const findEmail = async q => {
+export const findEmail = async (q: string) => {
   const resp = await gmail.users.messages.list({ userId: "me", q });
   const { messages = [] } = resp.data || {};
   if (messages.length < 1) {
@@ -18,12 +19,12 @@ const findEmail = async q => {
   return getEmail(messages[0].id);
 };
 
-const getSubjectFromEmail = email => {
+export const getSubjectFromEmail = email => {
   const subjectHeader = email.payload.headers.find(h => h.name === "Subject");
   return subjectHeader ? subjectHeader.value : null;
 };
 
-const extractHtmlFromEmail = email => {
+export const extractHtmlFromEmail = email => {
   const parts = email.payload.parts;
 
   const htmlPart = parts.find(part => part.mimeType === "text/html");
