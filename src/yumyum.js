@@ -16,13 +16,16 @@ const fetchLatestMenuEmail = () => {
   return findEmail(filters.join(" "));
 };
 
+const isImageHost = url =>
+  url.match("gallery.mailchimp.com") || url.match("mcusercontent.com");
+
 const extractMenuImageUrl = html => {
   const dom = cheerio.load(html);
   const images = dom("img").toArray();
   const urls = images.map(image => image.attribs.src);
 
   const matchingUrls = urls
-    .filter(url => url.match("gallery.mailchimp.com"))
+    .filter(isImageHost)
     .filter(url => !url.match(LOGO_URL));
 
   return matchingUrls[0] || null;
